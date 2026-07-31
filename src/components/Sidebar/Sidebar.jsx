@@ -1,16 +1,17 @@
 import { useState } from "react";
 import Logo from "./Logo";
 import Navigation from "./Navigation";
+import Profile from "./Profile";
 import {
   FaTachometerAlt,
   FaUsers,
   FaNewspaper,
   FaCog,
   FaUserCircle,
-} from "react-icons/fa";
-import MenuItem from "./MenuItem";
+ } from "react-icons/fa";
+ import MenuItem from "./MenuItem";
 
-const menuItems = [
+ const menuItems = [
   {
     title: "Dashboard",
     icon: <FaTachometerAlt />,
@@ -30,9 +31,9 @@ const menuItems = [
     icon: <FaCog />,
     
   },
-];
+  ];
 
-function Sidebar() {
+ function Sidebar() {
   const [activeMenu, setActiveMenu] = useState(
     "Blog & News Management"
   );
@@ -46,28 +47,20 @@ function Sidebar() {
        <Logo/>
 
         {/* Navigation */}
-      <Navigation
-  menuItems={menuItems}
-  activeMenu={activeMenu}
-  setActiveMenu={setActiveMenu}
-/>
+       <Navigation
+        menuItems={menuItems}
+        activeMenu={activeMenu}
+        setActiveMenu={setActiveMenu}
+       />
 
-      {/* Profile */}
-      <div className="flex items-center gap-3 border-t pt-4">
-        <FaUserCircle className="text-4xl text-gray-500" />
-
-        <div>
-          <h2 className="font-semibold">
-            Super Admin
-          </h2>
-
-          <p className="text-sm text-gray-500">
-            superadmin@gmail.com
-          </p>
-        </div>
+       {/* Profile */}
+       <Profile
+       name="Super Admin"
+       email="superadmin@gmail.com"
+       avatar={<FaUserCircle />}
+       />
       </div>
-    </div>
-  </aside>
+    </aside>
   );
 }
 
