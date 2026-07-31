@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   FaTachometerAlt,
   FaUsers,
@@ -31,6 +32,9 @@ const menuItems = [
 ];
 
 function Sidebar() {
+  const [activeMenu, setActiveMenu] = useState(
+    "Blog & News Management"
+  );
   return (
     <aside className="w-[280px] h-screen bg-white border-r flex flex-col justify-between p-6">
       {/* Logo */}
