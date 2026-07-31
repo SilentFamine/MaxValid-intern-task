@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Logo from "./Logo";
+import Navigation from "./Navigation";
 import {
   FaTachometerAlt,
   FaUsers,
@@ -45,17 +46,11 @@ function Sidebar() {
        <Logo/>
 
         {/* Navigation */}
-       <nav className="space-y-3">
-  {menuItems.map((item) => (
-    <MenuItem
-      key={item.title}
-      title={item.title}
-      icon={item.icon}
-      active={activeMenu===item.title}
-      onClick={()=>setActiveMenu(item.title)}
-    />
-  ))}
-</nav>
+      <Navigation
+  menuItems={menuItems}
+  activeMenu={activeMenu}
+  setActiveMenu={setActiveMenu}
+/>
 
       {/* Profile */}
       <div className="flex items-center gap-3 border-t pt-4">
