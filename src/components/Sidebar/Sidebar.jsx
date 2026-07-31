@@ -57,7 +57,7 @@ import {
        <Profile
        name="Super Admin"
        email="superadmin@gmail.com"
-       avatar={<FaUserCircle />}
+       avatar={<FaUserCircle />}y
        />
       </div>
     </aside>
