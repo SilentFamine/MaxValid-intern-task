@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Logo from "./Logo";
 import {
   FaTachometerAlt,
   FaUsers,
@@ -12,22 +13,21 @@ const menuItems = [
   {
     title: "Dashboard",
     icon: <FaTachometerAlt />,
-    active: false,
   },
   {
     title: "User Management",
     icon: <FaUsers />,
-    active: false,
+  
   },
   {
     title: "Blog & News Management",
     icon: <FaNewspaper />,
-    active: true,
+    
   },
   {
     title: "Setting Management",
     icon: <FaCog />,
-    active: false,
+    
   },
 ];
 
@@ -42,9 +42,7 @@ function Sidebar() {
     <aside className="w-[280px] h-screen bg-white border-r flex flex-col justify-between p-6">
       {/* Logo */}
       <div>
-        <h1 className="text-2xl font-bold text-blue-600 mb-10">
-          LOGO
-        </h1>
+       <Logo/>
 
         {/* Navigation */}
        <nav className="space-y-3">
