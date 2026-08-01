@@ -1,17 +1,20 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Sidebar from "./components/Sidebar/Sidebar";
+import AdminLayout from "./Layouts/AdminLayout";
+
+import Dashboard from "./pages/admin/Dashboard";
+import BlogManagement from "./pages/admin/BlogManagement";
 
 function App() {
   return (
-  <div className="flex">
-      <Sidebar />
-
-      <div className="flex-1 p-10">
-        <h1 className="text-3xl font-bold">
-          Main Content
-        </h1>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="blogs" element={<BlogManagement />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
