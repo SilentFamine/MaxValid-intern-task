@@ -1,4 +1,4 @@
-function Table() {
+import blogData from "../../data/blogData";function Table() {
   return (
     <div className="bg-white rounded-lg shadow border overflow-hidden">
       <table className="w-full">
@@ -11,9 +11,16 @@ function Table() {
           </tr>
         </thead>
 
-        <tbody>
-          {/* Data পরে যোগ করব */}
-        </tbody>
+            <tbody>
+                {blogData.map((blog) => (
+                <tr key={blog.id} className="border-b">
+                <td className="px-6 py-4">{blog.title}</td>
+                <td className="px-6 py-4">{blog.date}</td>
+                <td className="px-6 py-4">{blog.source}</td>
+                <td className="px-6 py-4">...</td>
+                </tr>
+                ))}
+            </tbody>
       </table>
     </div>
   );
