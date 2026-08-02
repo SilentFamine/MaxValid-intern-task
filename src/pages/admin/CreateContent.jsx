@@ -1,5 +1,6 @@
 import Input from "../../components/Form/Input";
 import Textarea from "../../components/Form/Textarea";
+import Select from "../../components/Form/Select";
 
 function CreateContent() {
   return (
@@ -28,6 +29,14 @@ function CreateContent() {
         label="Content Body"
         placeholder="Write your content..."
         />
+
+        <Select
+            label="Status"
+            options={[
+                { value: "published", label: "Published" },
+                { value: "draft", label: "Draft" },
+            ]}
+            />
 
     </div>
   );
