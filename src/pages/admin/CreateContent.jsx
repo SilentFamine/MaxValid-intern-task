@@ -14,6 +14,7 @@ function CreateContent() {
     date: "",
     status: "published",
     body: "",
+    image: "",
   });
 
   // Handle Publish Button
@@ -28,6 +29,7 @@ function CreateContent() {
     date: "",
     status: "published",
     body: "",
+    
   });
 };
 
@@ -89,7 +91,25 @@ function CreateContent() {
           ]}
         />
 
-        <FileUpload label="Upload Featured Image" />
+        <FileUpload
+  label="Upload Featured Image"
+  onChange={(e) => {
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setFormData({
+        ...formData,
+        image: reader.result,
+      });
+    };
+
+    reader.readAsDataURL(file);
+  }}
+/>
 
         <Textarea
           label="Content Body"
