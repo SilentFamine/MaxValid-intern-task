@@ -10,6 +10,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import BlogManagement from "./pages/admin/BlogManagement";
 import CreateContent from "./pages/admin/CreateContent";
 import EditContent from "./pages/admin/EditContent";
+import NotFound from "./pages/public/NotFound";
 
 function App() {
   return (
