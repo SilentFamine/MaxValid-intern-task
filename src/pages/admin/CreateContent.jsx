@@ -1,6 +1,7 @@
 import Input from "../../components/Form/Input";
 import Textarea from "../../components/Form/Textarea";
 import Select from "../../components/Form/Select";
+import FileUpload from "../../components/Form/FileUpload";
 
 function CreateContent() {
   return (
@@ -36,6 +37,10 @@ function CreateContent() {
                 { value: "published", label: "Published" },
                 { value: "draft", label: "Draft" },
             ]}
+            />
+
+            <FileUpload
+                label="Upload Featured Image"
             />
 
     </div>
