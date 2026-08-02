@@ -1,6 +1,7 @@
 import Search from "../../components/Search/Search";
 import Button from "../../components/Button/Button";
 import Table from "../../components/Table/Table";
+import { useNavigate } from "react-router-dom";
 
 function BlogManagement() {
   return (
@@ -17,7 +18,9 @@ function BlogManagement() {
         {/* Right Side */}
         <div className="flex items-center gap-4">
           <Search placeholder="Search Content..." />
-          <Button text="Create New Content" />
+          <Button
+            text="Create New Content"
+            onClick={() => navigate("/create-content")}/>
         </div>
 
       </div>
