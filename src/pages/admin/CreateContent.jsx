@@ -14,6 +14,16 @@ function CreateContent() {
         placeholder="Enter content title"
       />
 
+      <Input
+        label="Source Link"
+        placeholder="https://example.com"
+        />
+
+        <Input
+        label="Published Date"
+        type="date"
+        />
+
       <Textarea
         label="Content Body"
         placeholder="Write your content..."
