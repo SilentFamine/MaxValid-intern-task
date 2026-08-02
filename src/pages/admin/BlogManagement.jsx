@@ -15,8 +15,11 @@ function BlogManagement() {
 
   const [blogs, setBlogs] = useState([]);
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // Load all blogs
+  const blogsPerPage = 5;
+
+  // Load Blogs
   const loadBlogs = () => {
     setBlogs(getBlogs());
   };
@@ -28,6 +31,15 @@ function BlogManagement() {
   // Search Filter
   const filteredBlogs = blogs.filter((blog) =>
     blog.title.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // Pagination
+  const indexOfLastBlog = currentPage * blogsPerPage;
+  const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
+
+  const currentBlogs = filteredBlogs.slice(
+    indexOfFirstBlog,
+    indexOfLastBlog
   );
 
   // Delete Blog
@@ -44,7 +56,7 @@ function BlogManagement() {
 
   return (
     <div className="space-y-6">
-      {/* Top Section */}
+      {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">
           Blog & News Management
@@ -54,7 +66,10 @@ function BlogManagement() {
           <Search
             placeholder="Search Content..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setCurrentPage(1);
+            }}
           />
 
           <Button
@@ -64,11 +79,36 @@ function BlogManagement() {
         </div>
       </div>
 
-      {/* Table */}
+      {/* Blog Table */}
       <Table
-        blogs={filteredBlogs}
+        blogs={currentBlogs}
         onDelete={handleDelete}
       />
+
+      {/* Pagination */}
+      {filteredBlogs.length > blogsPerPage && (
+        <div className="flex justify-center gap-2 mt-6">
+          {Array.from({
+            length: Math.ceil(
+              filteredBlogs.length / blogsPerPage
+            ),
+          }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() =>
+                setCurrentPage(index + 1)
+              }
+              className={`px-4 py-2 rounded-lg transition ${
+                currentPage === index + 1
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-200 hover:bg-gray-300"
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
