@@ -17,7 +17,15 @@ function Table({ blogs = [] }) {
               <td className="px-6 py-4">{blog.title}</td>
               <td className="px-6 py-4">{blog.date}</td>
               <td className="px-6 py-4">{blog.source}</td>
-              <td className="px-6 py-4">...</td>
+              <td className="px-6 py-4"> <div className="flex gap-2">
+    <button className="px-3 py-1 bg-blue-600 text-white rounded">
+      Edit
+    </button>
+
+    <button className="px-3 py-1 bg-red-600 text-white rounded">
+      Delete
+    </button>
+  </div></td>
             </tr>
           ))}
         </tbody>
