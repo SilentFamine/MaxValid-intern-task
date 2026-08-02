@@ -20,9 +20,10 @@ function BlogManagement() {
   const blogsPerPage = 5;
 
   // Load Blogs
-  const loadBlogs = () => {
-    setBlogs(getBlogs());
-  };
+ const loadBlogs = () => {
+  const blogs = getBlogs().sort((a, b) => b.id - a.id);
+  setBlogs(blogs);
+};
 
   useEffect(() => {
     loadBlogs();

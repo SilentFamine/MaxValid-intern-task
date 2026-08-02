@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Input from "../../components/Form/Input";
 import Textarea from "../../components/Form/Textarea";
@@ -7,8 +7,10 @@ import Select from "../../components/Form/Select";
 import FileUpload from "../../components/Form/FileUpload";
 import Button from "../../components/Button/Button";
 
-import { getBlogs, updateBlog } from "../../utils/blogStorage";
-import { useNavigate } from "react-router-dom";
+import {
+  getBlogs,
+  updateBlog,
+} from "../../utils/blogStorage";
 
 function EditContent() {
   const { id } = useParams();
@@ -20,8 +22,10 @@ function EditContent() {
     date: "",
     status: "published",
     body: "",
+    image: "",
   });
 
+  // Load selected blog
   useEffect(() => {
     const blogs = getBlogs();
 
@@ -34,13 +38,14 @@ function EditContent() {
     }
   }, [id]);
 
- const handleSubmit = () => {
-  updateBlog(Number(id), formData);
+  // Update Blog
+  const handleSubmit = () => {
+    updateBlog(Number(id), formData);
 
-  alert("Blog Updated Successfully!");
+    alert("Blog Updated Successfully!");
 
-  navigate("/blogs");
-};
+    navigate("/admin/blogs");
+  };
 
   return (
     <div className="bg-white rounded-xl shadow p-8 max-w-3xl">
@@ -49,6 +54,7 @@ function EditContent() {
       </h1>
 
       <div className="space-y-6">
+
         <Input
           label="Content Title"
           placeholder="Enter content title"
@@ -95,12 +101,44 @@ function EditContent() {
             })
           }
           options={[
-            { value: "published", label: "Published" },
-            { value: "draft", label: "Draft" },
+            {
+              value: "published",
+              label: "Published",
+            },
+            {
+              value: "draft",
+              label: "Draft",
+            },
           ]}
         />
 
-        <FileUpload label="Upload Featured Image" />
+        <FileUpload
+          label="Upload Featured Image"
+          onChange={(e) => {
+            const file = e.target.files[0];
+
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+              setFormData((prev) => ({
+                ...prev,
+                image: reader.result,
+              }));
+            };
+
+            reader.readAsDataURL(file);
+          }}
+        />
+
+        {formData.image && (
+          <img
+            src={formData.image}
+            alt="Preview"
+            className="w-48 rounded-lg border"
+          />
+        )}
 
         <Textarea
           label="Content Body"
@@ -117,6 +155,7 @@ function EditContent() {
         <div className="flex justify-end gap-4 pt-4">
           <Button
             text="Cancel"
+            onClick={() => navigate("/admin/blogs")}
             className="bg-gray-200 text-gray-800 hover:bg-gray-300"
           />
 
@@ -125,6 +164,7 @@ function EditContent() {
             onClick={handleSubmit}
           />
         </div>
+
       </div>
     </div>
   );
