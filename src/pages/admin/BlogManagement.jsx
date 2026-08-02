@@ -2,8 +2,15 @@ import Search from "../../components/Search/Search";
 import Button from "../../components/Button/Button";
 import Table from "../../components/Table/Table";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getBlogs } from "../../utils/blogStorage";
 
 function BlogManagement() {
+  const [blogs, setBlogs] = useState([]);
+
+useEffect(() => {
+  setBlogs(getBlogs());
+}, []);
   return (
     <div className="space-y-6">
 
@@ -26,7 +33,7 @@ function BlogManagement() {
       </div>
 
       {/* Table */}
-      <Table />
+      <Table blogs={blogs} />
 
     </div>
   );
