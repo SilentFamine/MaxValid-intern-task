@@ -1,35 +1,48 @@
 const STORAGE_KEY = "blogs";
 
-// সব Blog পাওয়া
+// Get all blogs
 export const getBlogs = () => {
   const blogs = localStorage.getItem(STORAGE_KEY);
   return blogs ? JSON.parse(blogs) : [];
 };
 
-// নতুন Blog Save করা
+// Save all blogs
 export const saveBlogs = (blogs) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(blogs));
 };
 
-// একটি Blog Add করা
+// Add a new blog
 export const addBlog = (blog) => {
   const blogs = getBlogs();
 
-  blogs.push({
+  const newBlog = {
     id: Date.now(),
     ...blog,
-  });
+  };
 
+  blogs.push(newBlog);
   saveBlogs(blogs);
 };
 
+// Update an existing blog
 export const updateBlog = (id, updatedBlog) => {
   const blogs = getBlogs();
 
   const updatedBlogs = blogs.map((blog) =>
-    blog.id === id
-      ? { ...updatedBlog, id }
+    blog.id === Number(id)
+      ? { ...blog, ...updatedBlog, id: Number(id) }
       : blog
+  );
+
+  saveBlogs(updatedBlogs);
+};
+
+// Delete a blog
+export const deleteBlog = (id) => {
+  const blogs = getBlogs();
+
+  const updatedBlogs = blogs.filter(
+    (blog) => blog.id !== Number(id)
   );
 
   saveBlogs(updatedBlogs);

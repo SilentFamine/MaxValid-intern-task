@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
-function Table({ blogs = [] }) {
+function Table({
+  blogs = [],
+  onDelete,
+}) {
   const navigate = useNavigate();
 
   return (
@@ -31,7 +34,10 @@ function Table({ blogs = [] }) {
                     Edit
                   </button>
 
-                  <button className="px-3 py-1 bg-red-600 text-white rounded">
+                  <button
+                    onClick={() => onDelete(blog.id)}
+                    className="px-3 py-1 bg-red-600 text-white rounded"
+                  >
                     Delete
                   </button>
                 </div>
