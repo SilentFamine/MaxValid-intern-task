@@ -1,0 +1,133 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import Input from "../../components/Form/Input";
+import Textarea from "../../components/Form/Textarea";
+import Select from "../../components/Form/Select";
+import FileUpload from "../../components/Form/FileUpload";
+import Button from "../../components/Button/Button";
+
+import { getBlogs, updateBlog } from "../../utils/blogStorage";
+import { useNavigate } from "react-router-dom";
+
+function EditContent() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    title: "",
+    source: "",
+    date: "",
+    status: "published",
+    body: "",
+  });
+
+  useEffect(() => {
+    const blogs = getBlogs();
+
+    const selectedBlog = blogs.find(
+      (blog) => blog.id === Number(id)
+    );
+
+    if (selectedBlog) {
+      setFormData(selectedBlog);
+    }
+  }, [id]);
+
+ const handleSubmit = () => {
+  updateBlog(Number(id), formData);
+
+  alert("Blog Updated Successfully!");
+
+  navigate("/blogs");
+};
+
+  return (
+    <div className="bg-white rounded-xl shadow p-8 max-w-3xl">
+      <h1 className="text-2xl font-bold mb-8">
+        Edit Content
+      </h1>
+
+      <div className="space-y-6">
+        <Input
+          label="Content Title"
+          placeholder="Enter content title"
+          value={formData.title}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              title: e.target.value,
+            })
+          }
+        />
+
+        <Input
+          label="Source Link"
+          placeholder="https://example.com"
+          value={formData.source}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              source: e.target.value,
+            })
+          }
+        />
+
+        <Input
+          label="Published Date"
+          type="date"
+          value={formData.date}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              date: e.target.value,
+            })
+          }
+        />
+
+        <Select
+          label="Status"
+          value={formData.status}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              status: e.target.value,
+            })
+          }
+          options={[
+            { value: "published", label: "Published" },
+            { value: "draft", label: "Draft" },
+          ]}
+        />
+
+        <FileUpload label="Upload Featured Image" />
+
+        <Textarea
+          label="Content Body"
+          placeholder="Write your content..."
+          value={formData.body}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              body: e.target.value,
+            })
+          }
+        />
+
+        <div className="flex justify-end gap-4 pt-4">
+          <Button
+            text="Cancel"
+            className="bg-gray-200 text-gray-800 hover:bg-gray-300"
+          />
+
+          <Button
+            text="Update"
+            onClick={handleSubmit}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default EditContent;

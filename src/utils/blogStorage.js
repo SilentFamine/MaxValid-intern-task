@@ -22,3 +22,15 @@ export const addBlog = (blog) => {
 
   saveBlogs(blogs);
 };
+
+export const updateBlog = (id, updatedBlog) => {
+  const blogs = getBlogs();
+
+  const updatedBlogs = blogs.map((blog) =>
+    blog.id === id
+      ? { ...updatedBlog, id }
+      : blog
+  );
+
+  saveBlogs(updatedBlogs);
+};
