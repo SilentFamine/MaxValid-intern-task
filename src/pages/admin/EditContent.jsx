@@ -25,7 +25,8 @@ function EditContent() {
     image: "",
   });
 
-  // Load selected blog
+  const [errors, setErrors] = useState({});
+
   useEffect(() => {
     const blogs = getBlogs();
 
@@ -38,8 +39,30 @@ function EditContent() {
     }
   }, [id]);
 
-  // Update Blog
   const handleSubmit = () => {
+    const newErrors = {};
+
+    if (!formData.title.trim()) {
+      newErrors.title = "Title is required";
+    }
+
+    if (!formData.source.trim()) {
+      newErrors.source = "Source link is required";
+    }
+
+    if (!formData.date) {
+      newErrors.date = "Date is required";
+    }
+
+    if (!formData.body.trim()) {
+      newErrors.body = "Content body is required";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     updateBlog(Number(id), formData);
 
     alert("Blog Updated Successfully!");
@@ -55,41 +78,62 @@ function EditContent() {
 
       <div className="space-y-6">
 
-        <Input
-          label="Content Title"
-          placeholder="Enter content title"
-          value={formData.title}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              title: e.target.value,
-            })
-          }
-        />
+        <div>
+          <Input
+            label="Content Title"
+            placeholder="Enter content title"
+            value={formData.title}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                title: e.target.value,
+              })
+            }
+          />
+          {errors.title && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.title}
+            </p>
+          )}
+        </div>
 
-        <Input
-          label="Source Link"
-          placeholder="https://example.com"
-          value={formData.source}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              source: e.target.value,
-            })
-          }
-        />
+        <div>
+          <Input
+            label="Source Link"
+            placeholder="https://example.com"
+            value={formData.source}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                source: e.target.value,
+              })
+            }
+          />
+          {errors.source && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.source}
+            </p>
+          )}
+        </div>
 
-        <Input
-          label="Published Date"
-          type="date"
-          value={formData.date}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              date: e.target.value,
-            })
-          }
-        />
+        <div>
+          <Input
+            label="Published Date"
+            type="date"
+            value={formData.date}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                date: e.target.value,
+              })
+            }
+          />
+          {errors.date && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.date}
+            </p>
+          )}
+        </div>
 
         <Select
           label="Status"
@@ -140,17 +184,24 @@ function EditContent() {
           />
         )}
 
-        <Textarea
-          label="Content Body"
-          placeholder="Write your content..."
-          value={formData.body}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              body: e.target.value,
-            })
-          }
-        />
+        <div>
+          <Textarea
+            label="Content Body"
+            placeholder="Write your content..."
+            value={formData.body}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                body: e.target.value,
+              })
+            }
+          />
+          {errors.body && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.body}
+            </p>
+          )}
+        </div>
 
         <div className="flex justify-end gap-4 pt-4">
           <Button

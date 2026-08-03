@@ -17,21 +17,47 @@ function CreateContent() {
     image: "",
   });
 
-  // Handle Publish Button
- const handleSubmit = () => {
-  addBlog(formData);
+  const [errors, setErrors] = useState({});
 
-  alert("Blog Published Successfully!");
+  const handleSubmit = () => {
+    const newErrors = {};
 
-  setFormData({
-    title: "",
-    source: "",
-    date: "",
-    status: "published",
-    body: "",
-    
-  });
-};
+    if (!formData.title.trim()) {
+      newErrors.title = "Title is required";
+    }
+
+    if (!formData.source.trim()) {
+      newErrors.source = "Source link is required";
+    }
+
+    if (!formData.date) {
+      newErrors.date = "Date is required";
+    }
+
+    if (!formData.body.trim()) {
+      newErrors.body = "Content body is required";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    addBlog(formData);
+
+    alert("Blog Published Successfully!");
+
+    setErrors({});
+
+    setFormData({
+      title: "",
+      source: "",
+      date: "",
+      status: "published",
+      body: "",
+      image: "",
+    });
+  };
 
   return (
     <div className="bg-white rounded-xl shadow p-8 max-w-3xl">
@@ -40,42 +66,71 @@ function CreateContent() {
       </h1>
 
       <div className="space-y-6">
-        <Input
-          label="Content Title"
-          placeholder="Enter content title"
-          value={formData.title}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              title: e.target.value,
-            })
-          }
-        />
 
-        <Input
-          label="Source Link"
-          placeholder="https://example.com"
-          value={formData.source}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              source: e.target.value,
-            })
-          }
-        />
+        {/* Title */}
+        <div>
+          <Input
+            label="Content Title"
+            placeholder="Enter content title"
+            value={formData.title}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                title: e.target.value,
+              })
+            }
+          />
 
-        <Input
-          label="Published Date"
-          type="date"
-          value={formData.date}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              date: e.target.value,
-            })
-          }
-        />
+          {errors.title && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.title}
+            </p>
+          )}
+        </div>
 
+        {/* Source */}
+        <div>
+          <Input
+            label="Source Link"
+            placeholder="https://example.com"
+            value={formData.source}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                source: e.target.value,
+              })
+            }
+          />
+
+          {errors.source && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.source}
+            </p>
+          )}
+        </div>
+
+        {/* Date */}
+        <div>
+          <Input
+            label="Published Date"
+            type="date"
+            value={formData.date}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                date: e.target.value,
+              })
+            }
+          />
+
+          {errors.date && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.date}
+            </p>
+          )}
+        </div>
+
+        {/* Status */}
         <Select
           label="Status"
           value={formData.status}
@@ -86,54 +141,72 @@ function CreateContent() {
             })
           }
           options={[
-            { value: "published", label: "Published" },
-            { value: "draft", label: "Draft" },
+            {
+              value: "published",
+              label: "Published",
+            },
+            {
+              value: "draft",
+              label: "Draft",
+            },
           ]}
         />
 
+        {/* Image */}
         <FileUpload
-  label="Upload Featured Image"
-  onChange={(e) => {
-    const file = e.target.files[0];
+          label="Upload Featured Image"
+          onChange={(e) => {
+            const file = e.target.files[0];
 
-    if (!file) return;
+            if (!file) return;
 
-    const reader = new FileReader();
+            const reader = new FileReader();
 
-    reader.onloadend = () => {
-      setFormData({
-        ...formData,
-        image: reader.result,
-      });
-    };
+            reader.onloadend = () => {
+              setFormData((prev) => ({
+                ...prev,
+                image: reader.result,
+              }));
+            };
 
-    reader.readAsDataURL(file);
-  }}
-/>
-
-        <Textarea
-          label="Content Body"
-          placeholder="Write your content..."
-          value={formData.body}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              body: e.target.value,
-            })
-          }
+            reader.readAsDataURL(file);
+          }}
         />
 
+        {/* Body */}
+        <div>
+          <Textarea
+            label="Content Body"
+            placeholder="Write your content..."
+            value={formData.body}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                body: e.target.value,
+              })
+            }
+          />
+
+          {errors.body && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.body}
+            </p>
+          )}
+        </div>
+
+        {/* Buttons */}
         <div className="flex justify-end gap-4 pt-4">
           <Button
             text="Cancel"
             className="bg-gray-200 text-gray-800 hover:bg-gray-300"
           />
-              
+
           <Button
             text="Publish"
             onClick={handleSubmit}
           />
         </div>
+
       </div>
     </div>
   );

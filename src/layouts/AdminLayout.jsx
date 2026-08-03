@@ -4,16 +4,24 @@ import Header from "../components/Header/Header";
 
 function AdminLayout() {
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen bg-[#F8FAFC]">
+
+      {/* Sidebar */}
       <Sidebar />
 
-      <div className="flex flex-col flex-1 overflow-hidden">
+      {/* Right Content */}
+      <div className="flex flex-col flex-1">
+
+        {/* Header */}
         <Header />
 
-        <main className="flex-1 overflow-y-auto bg-gray-100 p-6">
+        {/* Main */}
+        <main className="flex-1 p-8 overflow-y-auto">
           <Outlet />
         </main>
+
       </div>
+
     </div>
   );
 }

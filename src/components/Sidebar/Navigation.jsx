@@ -1,19 +1,14 @@
 import MenuItem from "./MenuItem";
 
-function Navigation({
-  menuItems,
-  activeMenu,
-  setActiveMenu,
-}) {
+function Navigation({ menuItems, pathname }) {
   return (
-    <nav className="space-y-3">
+    <nav className="space-y-4">
       {menuItems.map((item) => (
         <MenuItem
           key={item.title}
           title={item.title}
           icon={item.icon}
-          active={activeMenu === item.title}
-          onClick={() => setActiveMenu(item.title)}
+          pathname={pathname}
         />
       ))}
     </nav>
