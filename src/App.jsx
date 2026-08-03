@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import AdminLayout from "./Layouts/AdminLayout";
-import PublicLayout from "./Layouts/PublicLayout";
+import AdminLayout from "./layouts/AdminLayout";
+import PublicLayout from "./layouts/PublicLayout";
 
 // Public Pages
 import Home from "./pages/public/Home";
