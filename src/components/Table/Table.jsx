@@ -28,15 +28,17 @@ function Table({
               <td className="px-6 py-4">
                 <div className="flex gap-2">
                   <button
-                    onClick={() => navigate(`/edit-content/${blog.id}`)}
-                    className="px-3 py-1 bg-blue-600 text-white rounded"
+                    onClick={() =>
+                      navigate(`/admin/edit-content/${blog.id}`)
+                    }
+                    className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
                   >
                     Edit
                   </button>
 
                   <button
                     onClick={() => onDelete(blog.id)}
-                    className="px-3 py-1 bg-red-600 text-white rounded"
+                    className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition"
                   >
                     Delete
                   </button>

@@ -75,7 +75,7 @@ function BlogManagement() {
 
           <Button
             text="Create New Content"
-            onClick={() => navigate("/create-content")}
+            onClick={() => navigate("/admin/create-content")}
           />
         </div>
       </div>
